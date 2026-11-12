@@ -102,6 +102,12 @@ def update_markdown_summary(data: dict) -> None:
 
 def perform_daily_commits(min_commits: int = 1, max_commits: int = 3, push: bool = True) -> None:
     ensure_git_identity()
+    if push:
+        try:
+            print("[*] Syncing latest changes from origin/main...")
+            run_git(["pull", "--rebase", "origin", "main"])
+        except Exception:
+            pass
     num_commits = random.randint(min_commits, max_commits)
     print(f"[*] Generating {num_commits} daily contribution commit(s)...")
 
